@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Age Calculator</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        input, button { padding: 8px; font-size: 16px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Age Calculator</h2>
+    <label for="dob">Date of Birth:</label><br>
+    
+    <!-- The date input -->
+    <input type="date" id="dob">
+    <button onclick="calculateAge()">Calculate</button>
+    
+    <p id="result"></p>
+    <script>
+        // Automatically set the max allowed date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('dob').setAttribute('max', today);
+        function calculateAge() {
+            const dobInput = document.getElementById('dob').value;
+            const resultText = document.getElementById('result');
+            if (!dobInput) {
+                resultText.innerText = "Please select a date.";
+                return;
+            }
+            const dob = new Date(dobInput);
+            const currentDate = new Date();
+            let age = currentDate.getFullYear() - dob.getFullYear();
+            const monthDifference = currentDate.getMonth() - dob.getMonth();
+            // Subtract 1 from the age if the birthday hasn't happened yet this year
+            if (monthDifference < 0 || (monthDifference === 0 && currentDate.getDate() < dob.getDate())) {
+                age--;
+            }
+            resultText.innerText = `You are ${age} years old.`;
+        }
+    </script>
+</body>
+</html>
