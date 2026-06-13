@@ -16,12 +16,13 @@
     <!-- The date input -->
     <input type="date" id="dob">
     <button onclick="calculateAge()">Calculate</button>
-    
-    <p id="result"></p>
+
     <script>
         // Automatically set the max allowed date to today
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('dob').setAttribute('max', today);
+
+       
         function calculateAge() {
             const dobInput = document.getElementById('dob').value;
             const resultText = document.getElementById('result');
@@ -29,11 +30,18 @@
                 resultText.innerText = "Please select a date.";
                 return;
             }
-            const dob = new Date(dobInput);
-            const currentDate = new Date();
+
+        const dob = new Date(dobInput);
+        const currentDate = new Date();
+        // Validate future dates
+        if (dob > currentDate) {
+            resultText.innerText = "Date of birth cannot be in the future.";
+            return;   
+        }
             let age = currentDate.getFullYear() - dob.getFullYear();
             const monthDifference = currentDate.getMonth() - dob.getMonth();
             // Subtract 1 from the age if the birthday hasn't happened yet this year
+            
             if (monthDifference < 0 || (monthDifference === 0 && currentDate.getDate() < dob.getDate())) {
                 age--;
             }
