@@ -1,8 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
@@ -11,18 +11,16 @@
 </head>
 <body>
     <div class="main-container">
-        <div class="header-container">
-            <h2>Age Calculator</h2>
-        </div> 
+        <h2>Age Calculator</h2>
         <div class="container">
             <label for="dob">Date of Birth:</label><br>
             
             <!-- The date input -->
-            <div class="input-container">
+             <div class="input-container">
                 <input type="date" id="dob">
                 <button class="calculate-btn" onclick="calculateAge()">Calculate</button>
                 
-                <p id="result">&nbsp;</p>
+                <p id="result"></p>
                 <script>
                     // Automatically set the max allowed date to today
                     const today = new Date().toISOString().split('T')[0];
@@ -36,6 +34,11 @@
                         }
                         const dob = new Date(dobInput);
                         const currentDate = new Date();
+                        // Validate future dates
+                        if (dob > currentDate) {
+                            resultText.innerText = "Date of birth cannot be in the future.";
+                            return;
+                        }
                         let age = currentDate.getFullYear() - dob.getFullYear();
                         const monthDifference = currentDate.getMonth() - dob.getMonth();
                         // Subtract 1 from the age if the birthday hasn't happened yet this year
